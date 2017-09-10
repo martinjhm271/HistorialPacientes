@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" 
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+    <h:body>
+        <h:form id="formulario_Paciente">
+
+            <p:panel header="Pacientes"  style="margin-bottom:20px">
+
+                <p:dataTable rowIndexVar="row" id="TablaPaciente" var="Paciente"  value="#{HistorialPacientes.getPacientes()}" selection="#{HistorialPacientes.selectPaciente}"  selectionMode="single" rowKey="#{Paciente.id}" style="margin-bottom:0">
+                    <p:column headerText="Id">
+                        <h:outputText value="#{Paciente.id}" />
+                    </p:column>
+
+                    <p:column headerText="Tipo de Documento">
+                        <h:outputText value="#{Paciente.tipo_id}" />
+                    </p:column>
+
+                    <p:column headerText="Nombre">
+                        <h:outputText value="#{Paciente.nombre}" />
+                    </p:column>
+
+                    <p:column headerText="Fecha Nacimiento">
+                        <h:outputText value="#{Paciente.fechaNacimiento}" />
+                    </p:column>
+
+                    <p:column headerText="Eps">
+                        <h:outputText value="#{Paciente.eps.nombre}" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:panelGrid columns="1" >
+                    <p:commandButton value="Info Paciente" id="infoPaciente"  action="registroconsultas.xhtml"/>
+                </p:panelGrid> 
+
+            </p:panel>
+
+            <p:panel header="Agregar Paciente"  style="margin-bottom:20px">
+
+                <p:panelGrid columns="8"  >
+                    <p:outputLabel value="Tipo de idenficiacion" />
+                    <p:inputText value="#{HistorialPacientes.tipo_id}"/>
+                    <p:outputLabel value="Nombre" />
+                    <p:inputText value="#{HistorialPacientes.nombre}"/>
+                    <p:outputLabel value="Fecha Nacimiento" />
+                    <p:calendar value="#{HistorialPacientes.fechaNacimiento}"/>
+                    <p:outputLabel value="Nombre Eps" />
+                    <p:inputText value="#{HistorialPacientes.epsname}"/>
+                    <p:outputLabel value="Nit Eps" />
+                    <p:inputText value="#{HistorialPacientes.epsnit}"/>
+
+                </p:panelGrid>  
+
+                <p:panelGrid columns="1" >
+                    <p:commandButton value="Agregar" id="newPaciente"  actionListener="#{HistorialPacientes.setPaciente()}" update="formulario_Paciente" />
+                </p:panelGrid>  
+
+            </p:panel>
+
+            <p:panel  header="Consultar Una Eps en General"  style="margin-bottom:20px">
+
+                <p:commandButton value="Ir a Consultas de una Eps" id="consultarConsultasEps"  action="/registroconsultaseps.xhtml" />
+
+
+            </p:panel>
+
+        </h:form>
+
+    </h:body>
+</html>

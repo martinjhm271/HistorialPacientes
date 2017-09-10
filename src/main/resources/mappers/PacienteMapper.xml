@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.eci.pdsw.samples.dao.mybatis.mappers.PacienteMapper">
+    
+    <resultMap type='Paciente' id="PacienteResult">
+        <id property='id' column='id'/>
+        <result property='tipo_id' column='tipo_id'/>
+        <result property='nombre' column='nombre'/>
+        <result property='fechaNacimiento' column='fechanacimiento'/>  
+        <association property='eps' javaType="Eps"  columnPrefix='eps_'  resultMap='EpsResult'/> 
+        <collection property='consultas' ofType='Consulta' columnPrefix='consulta_' resultMap='ConsultaResult'></collection>      
+    </resultMap>
+   
+     <resultMap type='Consulta' id="ConsultaResult">
+        <id property='id' column='id'/>
+        <result property='fechayHora' column='fechayhora'/>
+        <result property='resumen' column='resumen'/>  
+        <result property='costo' column='costo'/> 
+    </resultMap>
+    
+    <resultMap type='Eps' id="EpsResult">
+        <id property='id' column='id'/>
+        <result property='nombre' column='nombre'/>  
+        <result property='nit' column='nit'/>  
+    </resultMap>
+    
+   <select parameterType="map" id="obtenerPacienteConConsulta" resultMap="PacienteResult">
+       select
+        
+        p.id,
+        p.tipo_id,
+        p.nombre,
+        p.fechanacimiento,
+
+	e.id as eps_id,
+	e.nombre as eps_nombre,
+	e.nit as eps_nit,
+
+        c.id as consulta_id,
+        c.fechayhora as consulta_fechayhora,
+        c.resumen as consulta_resumen,
+        c.costo as consulta_costo
+  
+        
+        FROM  "public"."paciente" as p left join "public"."consulta" as c on p.id=c.paciente_id left join "public"."eps" as e on p.eps_id=e.id
+        
+       WHERE  c.id=#{id}
+       
+    </select>
+    
+       
+    	<select parameterType="map" id="obtenerPaciente" resultMap="PacienteResult">
+       select
+        
+        p.id,
+        p.tipo_id,
+        p.nombre,
+        p.fechanacimiento,
+
+	e.id as eps_id,
+	e.nombre as eps_nombre,
+	e.nit as eps_nit,
+
+        c.id as consulta_id,
+        c.fechayhora as consulta_fechayhora,
+        c.resumen as consulta_resumen,
+        c.costo as consulta_costo
+  
+        
+        FROM  "public"."paciente" as p left join "public"."consulta" as c on p.id=c.paciente_id left join "public"."eps" as e on p.eps_id=e.id
+        WHERE p.id=#{id}
+    </select>
+    
+    
+    
+    
+    
+    <select parameterType="map" id="obtenerPacientes" resultMap="PacienteResult">
+
+        select
+       
+        p.id,
+        p.tipo_id,
+        p.nombre,
+        p.fechanacimiento,
+
+	e.id as eps_id,
+	e.nombre as eps_nombre,
+	e.nit as eps_nit,
+
+        c.id as consulta_id,
+        c.fechayhora as consulta_fechayhora,
+        c.resumen as consulta_resumen,
+        c.costo as consulta_costo
+  
+        
+        FROM  "public"."paciente" as p left join "public"."consulta" as c on p.id=c.paciente_id left join "public"."eps" as e on p.eps_id=e.id
+        
+	
+        
+    </select>	 
+    
+     <select parameterType="map" id="obtenerPacientes2" resultMap="PacienteResult">
+
+        select
+        sum(c.costo),
+        p.id,
+        p.tipo_id,
+        p.nombre,
+        p.fechanacimiento,
+
+	e.id as eps_id,
+	e.nombre as eps_nombre,
+	e.nit as eps_nit,
+
+        c.id as consulta_id,
+        c.fechayhora as consulta_fechayhora,
+        c.resumen as consulta_resumen,
+        c.costo as consulta_costo
+  
+        
+        FROM  "public"."paciente" as p left join "public"."consulta" as c on p.id=c.paciente_id left join "public"."eps" as e on p.eps_id=e.id
+        WHERE  e.nombre=#{nameEps}
+	GROUP BY p.id,e.id,c.id
+	HAVING sum(c.costo)&gt;=#{deuda}
+        
+    </select>	 
+    
+    
+    
+    <insert parameterType="map" id="insertarPaciente" >
+        insert into "public"."paciente"(tipo_id,nombre,fechanacimiento,eps_id) values(#{tipo_id},#{nombre},#{fechaNacimiento},#{eps}) 
+    </insert>	
+    
+    <update parameterType="map" id="actualizarPaciente" >
+        update  "public"."paciente" set eps_id=#{eps} where id=#{id} 
+    </update>	
+
+    
+   
+
+                
+</mapper>

@@ -1,0 +1,10 @@
+Aiven
+url=jdbc:postgresql://pg-3df91da.martinjhm271-e86c.aivencloud.com:24375/defaultdb?sslmode=require
+user=avnadmin
+password=rlwte7usigxtndlg
+
+
+Amazon
+jdbc:postgresql://mydbinstance.c9zm69mla7sq.us-west-2.rds.amazonaws.com:5432/HistorialPacientes?sslmode=require
+user=awsuser
+password=mypassword

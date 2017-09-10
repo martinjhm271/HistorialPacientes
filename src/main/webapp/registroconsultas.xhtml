@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3c.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui" xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head></h:head>
+
+    <h:body>
+        <h:form id="formulario_registroconsulta">
+
+            <p:panel header="Consultas Del Paciente #{HistorialPacientes.selectPaciente.nombre}"  style="margin-bottom:20px">
+
+                <p:dataTable rowIndexVar="row" id="tablaconsultas" var="Consulta" value="#{HistorialPacientes.selectPaciente.consultas}" selection="#{HistorialPacientes.selectConsulta}"  selectionMode="single" rowKey="#{Consulta.id}">
+
+                    <p:column headerText="ID ">
+                        <h:outputText value="#{Consulta.id}" />
+                    </p:column>
+                    <p:column headerText="Fecha Consulta">
+                        <h:outputText value="#{Consulta.fechayHora}" />
+                    </p:column>
+                    <p:column headerText="Resumen">
+                        <h:outputText value="#{Consulta.resumen}" />
+                    </p:column>
+                    <p:column headerText="Costo">
+                        <h:outputText value="#{Consulta.costo}" />
+                    </p:column>
+
+                </p:dataTable>
+
+                <p:panelGrid columns="1"  >
+                    <h:outputLabel value="Pagar/Abonar la consulta seleccionada" />
+                    <h:inputText value="#{HistorialPacientes.pagoabono}"/>
+                    <p:commandButton value="Pagar/Abonar" id="pagarconsulta" update="formulario_registroconsulta" actionListener="#{HistorialPacientes.pagarAbonarConsulta()}" />
+                </p:panelGrid>  
+
+            </p:panel>
+
+
+            <p:panel header="Agregar Consulta"  style="margin-bottom:20px">
+                <p:panelGrid columns="8" >
+                    <h:outputLabel value="Fecha Consulta" />
+                    <p:calendar value="#{HistorialPacientes.fechayHoraConsulta}"/>
+                    <h:outputLabel value="Resumen Consulta" />
+                    <h:inputText value="#{HistorialPacientes.resumenConsulta}"/>
+                    <h:outputLabel value="Costo" />
+                    <h:inputText value="#{HistorialPacientes.costoConsulta}" />
+                </p:panelGrid>   
+
+                <p:panelGrid columns="1" >
+                    <p:commandButton value="Agregar" id="nUevaConsulta" update="formulario_registroconsulta" actionListener="#{HistorialPacientes.setConsulta()}" />
+                </p:panelGrid>  
+            </p:panel>
+
+
+
+            <p:panel header="Consultar Deuda Paciente"  style="margin-bottom:20px">
+                <p:panelGrid id="deudatotalaeps" columns="1"  >
+                    <h:outputLabel value="Deuda Total" />
+                    <h:outputLabel value="#{HistorialPacientes.deudaGeneralPacienteEps}" />
+                    <p:commandButton value="Calcular" id="calcularDeuda" update="formulario_registroconsulta" actionListener="#{HistorialPacientes.calcularDeuda()}" />
+                </p:panelGrid>
+
+            </p:panel>
+
+
+
+
+
+
+
+            <p:panelGrid columns="1"  >
+                <p:commandButton value="Volver a Registro de Pacientes" id="new" action="registropacientes" />
+            </p:panelGrid> 
+        </h:form>  
+    </h:body>
+
+</html>

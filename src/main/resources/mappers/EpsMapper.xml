@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.eci.pdsw.samples.dao.mybatis.mappers.EpsMapper">
+    
+    <resultMap type='Eps' id="EpsResult">
+        <id property='id' column='id'/>
+        <result property='nombre' column='nombre'/>  
+        <result property='nit' column='nit'/>  
+    </resultMap>
+        
+     
+    <select parameterType="map" id="obtenerEpss" resultMap="EpsResult">
+        select e.id ,e.nombre,e.nit FROM "public"."eps" as e 
+    </select>	
+    
+    
+    <select parameterType="map" id="obtenerEps" resultMap="EpsResult">
+        select e.id ,e.nombre,e.nit FROM "public"."eps" as e where e.id=#{id} 
+    </select>	
+    
+    <select parameterType="map" id="obtenerEps2" resultMap="EpsResult">
+        select e.id ,e.nombre,e.nit FROM "public"."eps" as e where e.nombre=#{nombre} 
+    </select>	
+    
+    <insert parameterType="map" id="insertarEps" >
+        insert into "public"."eps"(nombre,nit) VALUES(#{nombre},#{nit})
+    </insert>	
+    
+     <update parameterType="map" id="actualizarEps" >
+        update  "public"."eps" set nombre=#{nombre},nit=#{nit} where id=#{id} 
+    </update>	
+  
+</mapper>

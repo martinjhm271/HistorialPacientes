@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+  PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+  "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+  
+<mapper namespace="edu.eci.pdsw.samples.dao.mybatis.mappers.ConsultaMapper">
+    
+    <resultMap type='Consulta' id="ConsultaResult">
+        <id property='id' column='id'/>
+        <result property='fechayHora' column='fechayhora'/>
+        <result property='resumen' column='resumen'/>  
+        <result property='costo' column='costo'/> 
+    </resultMap>
+    
+    
+    
+    <select parameterType="map" id="obtenerConsulta" resultMap="ConsultaResult">
+        select
+        
+        c.id ,
+        c.fechayhora ,
+        c.resumen ,
+        c.costo
+
+        FROM  "public"."consulta" as c
+        where c.id={id}
+    </select>	
+
+
+    <select parameterType="map" id="obtenerConsultas" resultMap="ConsultaResult">
+        select
+        
+        c.id ,
+        c.fechayhora ,
+        c.resumen ,
+        c.costo
+
+        FROM  "public"."consulta" as c
+    </select>	
+    
+    <select parameterType="map" id="obtenerConsultas2" resultMap="ConsultaResult">
+        select
+        
+        c.id ,
+        c.fechayhora ,
+        c.resumen ,
+        c.costo
+
+        FROM  "public"."consulta" as c
+        where c.paciente_id=#{idPaciente}
+    </select>	
+    
+    
+    <select parameterType="map" id="obtenerConsultas3" resultMap="ConsultaResult">
+        select
+        
+        c.id ,
+        c.fechayhora ,
+        c.resumen ,
+        c.costo
+
+        FROM  "public"."consulta" as c left join "public"."paciente" as p on c.paciente_id=p.id left join "public"."eps" as e on p.eps_id=e.id
+        where e.nombre=#{nameEps} 
+        
+    </select>	
+    
+    <select parameterType="map" id="obtenerConsultas4" resultMap="ConsultaResult">
+        select
+        
+        c.id ,
+        c.fechayhora ,
+        c.resumen ,
+        c.costo
+
+        FROM  "public"."consulta" as c left join "public"."paciente" as p on c.paciente_id=p.id left join "public"."eps" as e on p.eps_id=e.id
+        where e.nombre=#{nameEps} and c.fechayhora &gt;= #{f1} and c.fechayhora &lt;= #{f2}
+        
+    </select>	
+    
+    
+ 
+    
+    <insert parameterType="map" id="insertarConsulta" >
+        insert into "public"."consulta"(fechayhora,resumen,costo,paciente_id) values(#{fechayHora},#{resumen},#{costo},#{idPaciente}) 
+    </insert>	
+    
+    <update parameterType="map" id="actualizarConsulta" >
+        update  "public"."consulta" set costo=#{costo} where id=#{id} and paciente_id=#{idPaciente}
+    </update>	
+
+
+</mapper>
