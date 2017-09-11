@@ -65,6 +65,11 @@ public class MyBatisDAOConsulta implements DaoConsulta{
          return consultaMapper.obtenerConsultas4(nombreEps, inicio, fin);
     }
 
+    @Override
+    public long cargarDeudaPorFecha(String nombreEps, Date inicio, Date fin) {
+        return consultaMapper.obtenerCostoEpsPorFecha(nombreEps, inicio, fin);
+    }
+
   
 
    

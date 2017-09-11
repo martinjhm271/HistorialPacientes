@@ -24,6 +24,7 @@ public interface DaoConsulta {
     
     public List<Consulta> cargarTodos4(String nombreEps,Date inicio,Date fin) throws PersistenceException;
     
+    public long cargarDeudaPorFecha(String nombreEps,Date inicio,Date fin) throws PersistenceException;
     
     public void guardar(Consulta c,int idPaciente,String tipo_id) throws PersistenceException;
     

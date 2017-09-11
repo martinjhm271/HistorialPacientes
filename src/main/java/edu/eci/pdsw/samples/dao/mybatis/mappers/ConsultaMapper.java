@@ -21,8 +21,9 @@ public interface ConsultaMapper {
     
     public List<Consulta> obtenerConsultas3(@Param("nameEps")String nameEps);
     
-    
     public List<Consulta> obtenerConsultas4(@Param("nameEps")String nameEps,@Param("f1")Date fechainicio,@Param("f2")Date fechafin);
+    
+    public long obtenerCostoEpsPorFecha(@Param("nameEps")String nameEps,@Param("f1")Date fechainicio,@Param("f2")Date fechafin);
     
     public Consulta obtenerConsulta(@Param("id")int id);
     

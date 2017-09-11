@@ -158,8 +158,6 @@ public class ServiciosPacientesGuiceMybatis implements ServiciosPacientes {
 
     @Override
     public List<Consulta> obtenerConsultasEpsPorFecha(String nameEps, java.util.Date fechaInicio, java.util.Date fechaFin) throws ExcepcionServiciosPacientes {
-        
-        
          List<Consulta>  c =new ArrayList<>();
         try {
             c=daoConsulta.cargarTodos4(nameEps, fechaInicio, fechaFin);
@@ -168,6 +166,17 @@ public class ServiciosPacientesGuiceMybatis implements ServiciosPacientes {
         }
         return c;
         
+    }
+
+    @Override
+    public long obtenerCostoEpsPorFecha(String nameEps, java.util.Date fechaInicio, java.util.Date fechaFin) throws ExcepcionServiciosPacientes {
+         long deuda =0;
+        try {
+            deuda=daoConsulta.cargarDeudaPorFecha(nameEps, fechaInicio, fechaFin);
+        } catch (PersistenceException ex) {
+            Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        return deuda;
     }
    
     

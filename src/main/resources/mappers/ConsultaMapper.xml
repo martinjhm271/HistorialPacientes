@@ -77,6 +77,16 @@
         
     </select>	
     
+    <select resultType="long" parameterType="map" id="obtenerCostoEpsPorFecha" >
+        select
+        
+        sum(c.costo)
+
+        FROM  "public"."consulta" as c left join "public"."paciente" as p on c.paciente_id=p.id left join "public"."eps" as e on p.eps_id=e.id
+        where e.nombre=#{nameEps} and c.fechayhora &gt;= #{f1} and c.fechayhora &lt;= #{f2}
+        
+    </select>	
+    
     
  
     

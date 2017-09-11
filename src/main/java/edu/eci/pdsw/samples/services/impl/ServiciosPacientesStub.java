@@ -138,6 +138,20 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
         }
         return temp;
     }
+    
+    @Override
+    public long obtenerCostoEpsPorFecha(String nameEps, Date fechaInicio, Date fechaFin) throws ExcepcionServiciosPacientes {
+        long deuda = 0;
+        for (Paciente p1 : pacientes.values()) {
+            if (p1.getEps().getNombre().equals(nameEps)) {
+                for (Consulta c : p1.getConsultas()) {
+                    if(c.getFechayHora().after(fechaInicio) && c.getFechayHora().before(fechaFin)){deuda += c.getCosto();}
+                }
+            }
+        }
+        return deuda;
+    }
+
 
     
 
@@ -237,6 +251,7 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
 
     }
 
+    
 }
 
 class Tupla<A, B> {

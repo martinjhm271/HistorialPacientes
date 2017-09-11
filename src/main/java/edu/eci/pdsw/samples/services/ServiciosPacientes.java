@@ -83,11 +83,22 @@ public interface ServiciosPacientes {
      * @param nameEps El nombre de la Eps en cuestion
      * @param fechaInicio fecha inicial del rango de las consultas a tener encuenta
      * @param fechaFin fecha final del rango de las consultas a tener encuenta
-     * @return Deuda total de las consultas asociadas a una Eps en un rango de fechas dado
+     * @return las consultas asociadas a una Eps en un rango de fechas dado
      * @throws ExcepcionServiciosPacientes si se presenta algún error lógico
      * o de persistencia (por ejemplo, si el paciente ya existe).
      */
     public abstract List<Consulta> obtenerConsultasEpsPorFecha(String nameEps,Date fechaInicio,Date fechaFin) throws ExcepcionServiciosPacientes;
+    
+    /**
+     * Consultar el costo total de una eps con un rango de fechas
+     * @param nameEps El nombre de la Eps en cuestion
+     * @param fechaInicio fecha inicial del rango de las consultas a tener encuenta
+     * @param fechaFin fecha final del rango de las consultas a tener encuenta
+     * @return Deuda total de las consultas asociadas a una Eps en un rango de fechas dado
+     * @throws ExcepcionServiciosPacientes si se presenta algún error lógico
+     * o de persistencia (por ejemplo, si el paciente ya existe).
+     */
+    public abstract long obtenerCostoEpsPorFecha(String nameEps,Date fechaInicio,Date fechaFin) throws ExcepcionServiciosPacientes;
     
     /**
      * Obtiene todas las consultas asociadas a una EPS dada
