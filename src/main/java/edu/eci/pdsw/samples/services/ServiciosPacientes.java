@@ -71,7 +71,7 @@ public interface ServiciosPacientes {
      * @param idPaciente id del paciente que solicito la consulta
      * @param tipoid el tipo de identificación
      * @param idConsulta  El id de la consulta a pagar
-     * @param pagoabono dinero a pagar o abonar a la consulta, pagoabono>0 y pagoabono<=costo de la consulta
+     * @param pagoabono dinero a pagar o abonar , pagoabono mayor a 0 y menor al costo
      * @throws ExcepcionServiciosPacientes si se presenta algún error de persistencia.
      */
     public abstract void pagarAbonarConsulta(int idPaciente,String tipoid,int idConsulta,long pagoabono) throws ExcepcionServiciosPacientes;
