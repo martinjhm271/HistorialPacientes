@@ -53,8 +53,6 @@ public class PacientesTest {
     @Test
     public void registroPacienteTest() throws SQLException{
         //java.sql.Statement stmt= getConnection().createStatement();  
-        //stmt.execute("INSERT INTO Posgrado(id, nombre,creditos )  VALUES(1, 'Economias',100 );");
-        //ServiciosReporte report=ServiciosReporteFactory.getInstance().getServiciosReporteForTesting();
     }
     
     
