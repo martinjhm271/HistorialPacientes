@@ -36,11 +36,11 @@ import javax.faces.bean.SessionScoped;
 @SessionScoped
 public class RegistroConsultaBean implements Serializable {
 
-    private final ServiciosPacientes sp = ServiciosHistorialPacientesFactory.getInstance().getServiciosPaciente();
+    private final ServiciosPacientes servicepacientes = ServiciosHistorialPacientesFactory.getInstance().getServiciosPaciente();
 
     public Paciente selectPaciente, pacienteResponsable;
     public Consulta selectConsulta, selectConsultaEps;
-    private String epsconsultarname = "", error = "", tipo_id = "", nombre = "", email = "", epsname = "", epsnit = "", resumenConsulta = "";
+    private String epsconsultarname = "", error = "", tipoId = "", nombre = "", email = "", epsname = "", epsnit = "", resumenConsulta = "";
     private Date fechaNacimiento, fecha1, fecha2, fechayHoraConsulta;
     private int epsid = 0, epsconsultarid = 0, idConsulta = 0;
     private List<Consulta> consultasEps = new ArrayList<>();
@@ -50,16 +50,16 @@ public class RegistroConsultaBean implements Serializable {
     public RegistroConsultaBean() {
     }
 
-    public void showMessage(String m, String n) {
+    public void showMessage(String estado, String mensaje) {
         FacesMessage message;
-        message = new FacesMessage(FacesMessage.SEVERITY_INFO, m, n);
+        message = new FacesMessage(FacesMessage.SEVERITY_INFO, estado, mensaje);
         RequestContext.getCurrentInstance().showMessageInDialog(message);
     }
 
     public List<Paciente> getPacientes() {
         List<Paciente> temp = null;
         try {
-            temp = sp.consultarPacientes();
+            temp = servicepacientes.consultarPacientes();
         } catch (ExcepcionServiciosPacientes ex) {
             Logger.getLogger(RegistroConsultaBean.class.getName()).log(Level.SEVERE, null, ex);
         }
@@ -67,11 +67,11 @@ public class RegistroConsultaBean implements Serializable {
     }
 
     public void setPaciente() {
-        if (!nombre.equals("") && fechaNacimiento != null && !tipo_id.equals("") && !epsname.equals("") && !epsnit.equals("")) {
+        if (!nombre.equals("") && fechaNacimiento != null && !tipoId.equals("") && !epsname.equals("") && !epsnit.equals("")) {
             try {
-                Eps e = new Eps(epsname, epsnit);
-                Paciente p = new Paciente(tipo_id, nombre, fechaNacimiento, e);
-                sp.registrarNuevoPaciente(p);
+                Eps eps = new Eps(epsname, epsnit);
+                Paciente paciente = new Paciente(tipoId, nombre, fechaNacimiento, eps);
+                servicepacientes.registrarNuevoPaciente(paciente);
             } catch (ExcepcionServiciosPacientes ex) {
                 Logger.getLogger(RegistroConsultaBean.class.getName()).log(Level.SEVERE, null, ex);
                 error = "si";
@@ -86,7 +86,7 @@ public class RegistroConsultaBean implements Serializable {
             epsname = "";
             epsnit = "";
 
-            tipo_id = "";
+            tipoId = "";
             nombre = "";
             fechaNacimiento = null;
 
@@ -97,7 +97,7 @@ public class RegistroConsultaBean implements Serializable {
     public void pagarAbonarConsulta() {
         if (selectConsulta != null && pagoabono > 0) {
             try {
-                sp.pagarAbonarConsulta(selectPaciente.getId(), selectPaciente.getTipo_id(), selectConsulta.getId(), pagoabono);
+                servicepacientes.pagarAbonarConsulta(selectPaciente.getId(), selectPaciente.getTipoId(), selectConsulta.getId(), pagoabono);
             } catch (ExcepcionServiciosPacientes ex) {
                 Logger.getLogger(RegistroConsultaBean.class.getName()).log(Level.SEVERE, null, ex);
                 error = "si";
@@ -117,8 +117,8 @@ public class RegistroConsultaBean implements Serializable {
     public void setConsulta() {
         if (fechayHoraConsulta != null && !resumenConsulta.equals("") && costoConsulta > 0) {
             try {
-                Consulta c = new Consulta(fechayHoraConsulta, resumenConsulta, costoConsulta);
-                sp.agregarConsultaPaciente(selectPaciente.getId(), selectPaciente.getTipo_id(), c);
+                Consulta consulta = new Consulta(fechayHoraConsulta, resumenConsulta, costoConsulta);
+                servicepacientes.agregarConsultaPaciente(selectPaciente.getId(), selectPaciente.getTipoId(), consulta);
             } catch (ExcepcionServiciosPacientes ex) {
                 Logger.getLogger(RegistroConsultaBean.class.getName()).log(Level.SEVERE, null, ex);
                 error = "si";
@@ -157,7 +157,7 @@ public class RegistroConsultaBean implements Serializable {
     public void consultarConsultasEpsPorFecha() {
         if (fecha1 != null && fecha2 != null && !epsconsultarname.equals("")) {
             try {
-                consultasEps = sp.obtenerConsultasEpsPorFecha(epsconsultarname, fecha1, fecha2);
+                consultasEps = servicepacientes.obtenerConsultasEpsPorFecha(epsconsultarname, fecha1, fecha2);
             } catch (ExcepcionServiciosPacientes ex) {
                 error = "si";
                 Logger.getLogger(RegistroConsultaBean.class.getName()).log(Level.SEVERE, null, ex);
@@ -176,7 +176,7 @@ public class RegistroConsultaBean implements Serializable {
     }
 
     public void calcularDeudaConsultasEpsPorFecha() {
-        if (consultasEps.size() > 0) {
+        if (!consultasEps.isEmpty()) {
             if (fecha1 != null && fecha2 != null && !epsconsultarname.equals("")) {
                 long ans = 0;
                 for (Consulta c : consultasEps) {
@@ -202,7 +202,7 @@ public class RegistroConsultaBean implements Serializable {
     public void consultarMorososEps() {
         if (monto > 0 && !epsconsultarname.equals("")) {
             try {
-                morososEps = sp.consultarPacienteMoroso(epsconsultarname, monto);
+                morososEps = servicepacientes.consultarPacienteMoroso(epsconsultarname, monto);
             } catch (ExcepcionServiciosPacientes ex) {
                 error = "si";
                 showMessage("Incorrecto", "Hubo un eror al momento de calcular los morosos " + ex.getMessage());
@@ -284,12 +284,12 @@ public class RegistroConsultaBean implements Serializable {
         this.selectConsultaEps = selectConsultaEps;
     }
 
-    public String getTipo_id() {
-        return tipo_id;
+    public String getTipoId() {
+        return tipoId;
     }
 
-    public void setTipo_id(String tipo_id) {
-        this.tipo_id = tipo_id;
+    public void setTipoId(String tipoId) {
+        this.tipoId = tipoId;
     }
 
     public String getNombre() {

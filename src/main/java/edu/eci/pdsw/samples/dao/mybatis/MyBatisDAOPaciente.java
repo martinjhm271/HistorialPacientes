@@ -18,41 +18,41 @@ public class MyBatisDAOPaciente implements DaoPaciente{
     
     
     @Inject
-    private PacienteMapper PacienteMapper; 
+    private PacienteMapper pacienteMapper; 
     
     @Override
-    public Paciente cargar(int id,String tipo_id) throws PersistenceException {
-        return PacienteMapper.obtenerPaciente(id,tipo_id);
+    public Paciente cargar(int idPaciente,String tipoId) throws PersistenceException {
+        return pacienteMapper.obtenerPaciente(idPaciente,tipoId);
     }
 
     @Override
-    public void guardar(Paciente p) throws PersistenceException {
-        PacienteMapper.insertarPaciente( p.getTipo_id(),p.getNombre(), p.getFechaNacimiento(), p.getEps().getId());
+    public void guardar(Paciente paciente) throws PersistenceException {
+        pacienteMapper.insertarPaciente( paciente.getTipoId(),paciente.getNombre(), paciente.getFechaNacimiento(), paciente.getEps().getId());
     }
 
     @Override
-    public void actualizar(int id,int eps_id) throws PersistenceException {
-        PacienteMapper.actualizarPaciente(id,eps_id);
+    public void actualizar(int idPaciente,int epsId) throws PersistenceException {
+        pacienteMapper.actualizarPaciente(idPaciente,epsId);
     }
 
     @Override
     public List<Paciente> cargarTodos() throws PersistenceException {
-        return PacienteMapper.obtenerPacientes();
+        return pacienteMapper.obtenerPacientes();
     }
 
     @Override
-    public Paciente cargar2(int consulta_id) throws PersistenceException {
-        return PacienteMapper.obtenerPacienteConConsulta(consulta_id);
+    public Paciente cargar2(int consultaId) throws PersistenceException {
+        return pacienteMapper.obtenerPacienteConConsulta(consultaId);
     }
 
     @Override
     public long cargarDeudaTotalPaciente(int idPaciente) throws PersistenceException {
-        return PacienteMapper.obtenerDeudaPaciente(idPaciente);
+        return pacienteMapper.obtenerDeudaPaciente(idPaciente);
     }
 
     @Override
     public List<Paciente> cargarTodos2(String nameEps, long deudageneral) throws PersistenceException {
-        return PacienteMapper.obtenerPacientes2(nameEps, deudageneral);
+        return pacienteMapper.obtenerPacientes2(nameEps, deudageneral);
     }
     
     

@@ -13,9 +13,9 @@ import java.util.List;
 public interface DaoPaciente {
 
     
-    public Paciente cargar(int id,String tipo_id) throws PersistenceException;
+    public Paciente cargar(int idPaciente,String tipoId) throws PersistenceException;
     
-    public Paciente cargar2(int id_consulta) throws PersistenceException;
+    public Paciente cargar2(int idConsulta) throws PersistenceException;
     
     public long cargarDeudaTotalPaciente(int idPaciente) throws PersistenceException;
     
@@ -23,9 +23,9 @@ public interface DaoPaciente {
     
     public List<Paciente> cargarTodos2(String nameEps,long deudageneral) throws PersistenceException;
     
-    public void guardar(Paciente p) throws PersistenceException;
+    public void guardar(Paciente paciente) throws PersistenceException;
     
-    public void actualizar(int id,int eps_id) throws PersistenceException;
+    public void actualizar(int idPaciente,int epsId) throws PersistenceException;
     
     
 }

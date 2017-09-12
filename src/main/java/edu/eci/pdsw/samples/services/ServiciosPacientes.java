@@ -16,7 +16,7 @@
  */
 package edu.eci.pdsw.samples.services;
 
-import edu.eci.pdsw.samples.services.impl.ServiciosPacientesStub;
+
 import edu.eci.pdsw.samples.entities.Consulta;
 import edu.eci.pdsw.samples.entities.Paciente;
 import java.util.Date;
@@ -52,19 +52,19 @@ public interface ServiciosPacientes {
     
     /**
      * Registra un nuevo PASIENTE en el sistema
-     * @param p El nuevo paciente
+     * @param paciente El nuevo paciente
      * @throws ExcepcionServiciosPacientes error en la persistencia al momento de registrar un nuevo paciente
      */
-    public abstract void registrarNuevoPaciente(Paciente p) throws ExcepcionServiciosPacientes;
+    public abstract void registrarNuevoPaciente(Paciente paciente) throws ExcepcionServiciosPacientes;
     
     /**
      * Agrega una consulta a un paciente ya registrado
      * @param idPaciente el identificador del paciente
      * @param tipoid el tipo de identificación
-     * @param c la consulta a ser agregada
+     * @param consulta la consulta a ser agregada
      * @throws ExcepcionServiciosPacientes si se presenta algún error de persistencia o si el paciente no existe.
      */
-    public abstract void agregarConsultaPaciente(int idPaciente,String tipoid,Consulta c) throws ExcepcionServiciosPacientes;
+    public abstract void agregarConsultaPaciente(int idPaciente,String tipoid,Consulta consulta) throws ExcepcionServiciosPacientes;
     
     /**
      * Pagar el saldo de una consulta de un paciente en especifico

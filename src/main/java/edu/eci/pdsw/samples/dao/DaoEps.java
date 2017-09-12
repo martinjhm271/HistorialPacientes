@@ -10,15 +10,15 @@ import java.util.List;
  */
 public interface DaoEps {
  
-    public Eps cargar(int id) throws PersistenceException;
+    public Eps cargar(int idEps) throws PersistenceException;
     
     public Eps cargar2(String nombre) throws PersistenceException;
     
     public List<Eps> cargarTodos() throws PersistenceException;
     
-    public void guardar(Eps i) throws PersistenceException;
+    public void guardar(Eps eps) throws PersistenceException;
     
-    public void actualizar(int id,String nombre,String nit) throws PersistenceException;
+    public void actualizar(int idEps,String nombre,String nit) throws PersistenceException;
     
     
 }

@@ -11,17 +11,13 @@ import edu.eci.pdsw.samples.dao.PersistenceException;
 
 
 import edu.eci.pdsw.samples.entities.Consulta;
-import edu.eci.pdsw.samples.entities.Eps;
-
 import edu.eci.pdsw.samples.entities.Paciente;
 
 
 import edu.eci.pdsw.samples.services.ExcepcionServiciosPacientes;
 
 import edu.eci.pdsw.samples.services.ServiciosPacientes;
-import java.sql.Date;
-import java.time.LocalDate;
-import java.time.temporal.ChronoUnit;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -34,11 +30,6 @@ import org.mybatis.guice.transactional.Transactional;
  */
 @Singleton
 public class ServiciosPacientesGuiceMybatis implements ServiciosPacientes {
-
-    
-
-    public ServiciosPacientesGuiceMybatis() {  
-    }
     
     @Inject
     DaoEps daoEps;
@@ -48,38 +39,43 @@ public class ServiciosPacientesGuiceMybatis implements ServiciosPacientes {
     
     @Inject 
     DaoConsulta daoConsulta;
+    
 
+    public ServiciosPacientesGuiceMybatis() {  
+    }
+    
+  
 
     @Override
     public Paciente consultarPaciente(int idPaciente, String tipoid) throws ExcepcionServiciosPacientes {
-        Paciente  p =null;
+        Paciente  paciente =null;
         try {
-            p=daoPaciente.cargar(idPaciente,tipoid);
+            paciente=daoPaciente.cargar(idPaciente,tipoid);
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return p;
+        return paciente;
     }
 
     @Override
     public List<Paciente> consultarPacientes() throws ExcepcionServiciosPacientes {
-        List<Paciente>  p =new ArrayList<>();
+        List<Paciente>  temp =new ArrayList<>();
         try {
-            p=daoPaciente.cargarTodos();
+            temp=daoPaciente.cargarTodos();
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return p;
+        return temp;
     }
     
     @Transactional
     @Override
-    public void registrarNuevoPaciente(Paciente p) throws ExcepcionServiciosPacientes {
+    public void registrarNuevoPaciente(Paciente paciente) throws ExcepcionServiciosPacientes {
         try {
-            daoEps.guardar(p.getEps());
-            int id_eps=daoEps.cargar2(p.getEps().getNombre()).getId();
-            p.getEps().setId(id_eps);
-            daoPaciente.guardar(p);
+            daoEps.guardar(paciente.getEps());
+            int ideps=daoEps.cargar2(paciente.getEps().getNombre()).getId();
+            paciente.getEps().setId(ideps);
+            daoPaciente.guardar(paciente);
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }      
@@ -87,9 +83,9 @@ public class ServiciosPacientesGuiceMybatis implements ServiciosPacientes {
     
     @Transactional
     @Override
-    public void agregarConsultaPaciente(int idPaciente, String tipoid, Consulta c) throws ExcepcionServiciosPacientes {
+    public void agregarConsultaPaciente(int idPaciente, String tipoid, Consulta consulta) throws ExcepcionServiciosPacientes {
          try {
-            daoConsulta.guardar(c,idPaciente,tipoid);
+            daoConsulta.guardar(consulta,idPaciente,tipoid);
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }  
@@ -111,60 +107,60 @@ public class ServiciosPacientesGuiceMybatis implements ServiciosPacientes {
 
     @Override
     public List<Consulta> obtenerConsultasEps(String nameEps) throws ExcepcionServiciosPacientes {
-        List<Consulta>  c =new ArrayList<>();
+        List<Consulta>  temp =new ArrayList<>();
         try {
-            c=daoConsulta.cargarTodos3(nameEps);
+            temp=daoConsulta.cargarTodos3(nameEps);
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return c;
+        return temp;
     }
 
    
 
     @Override
     public Paciente consultarPacienteConConsulta(int idConsulta) throws ExcepcionServiciosPacientes {
-        Paciente  p =null;
+        Paciente  paciente =null;
         try {
-            p=daoPaciente.cargar2(idConsulta);
+            paciente=daoPaciente.cargar2(idConsulta);
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return p;
+        return paciente;
     }
 
     @Override
     public List<Consulta> consultarConsultaPaciente(int idPaciente, String tipoid) throws ExcepcionServiciosPacientes {
-        List<Consulta>  c =new ArrayList<>();
+        List<Consulta>  temp =new ArrayList<>();
         try {
-            c=daoConsulta.cargarTodos2(idPaciente);
+            temp=daoConsulta.cargarTodos2(idPaciente);
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return c;
+        return temp;
     }
 
     @Override
     public List<Paciente> consultarPacienteMoroso(String nameEps, long deudaGeneral) throws ExcepcionServiciosPacientes {
-        List<Paciente>  p =new ArrayList<>();
+        List<Paciente>  temp =new ArrayList<>();
         try {
-            p=daoPaciente.cargarTodos2(nameEps, deudaGeneral);
+            temp=daoPaciente.cargarTodos2(nameEps, deudaGeneral);
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return p;
+        return temp;
     }
 
 
     @Override
     public List<Consulta> obtenerConsultasEpsPorFecha(String nameEps, java.util.Date fechaInicio, java.util.Date fechaFin) throws ExcepcionServiciosPacientes {
-         List<Consulta>  c =new ArrayList<>();
+         List<Consulta>  temp =new ArrayList<>();
         try {
-            c=daoConsulta.cargarTodos4(nameEps, fechaInicio, fechaFin);
+            temp=daoConsulta.cargarTodos4(nameEps, fechaInicio, fechaFin);
         } catch (PersistenceException ex) {
             Logger.getLogger(ServiciosPacientesGuiceMybatis.class.getName()).log(Level.SEVERE, null, ex);
         }
-        return c;
+        return temp;
         
     }
 

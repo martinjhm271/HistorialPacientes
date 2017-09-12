@@ -28,64 +28,63 @@ import java.util.Set;
 public class Paciente {
     
     private int id;
-    private String tipo_id;
+    private String tipoId;
     private String nombre;
     private Date fechaNacimiento;
     Set<Consulta> consultas=new LinkedHashSet<>();;
     private Eps eps;
     
 
-    public Paciente(String tipo_id, String nombre, Date fechaNacimiento,Eps eps) {
+    public Paciente(String tipoid, String nombre, Date fechaNacimiento,Eps eps) {
         this.id = -1;
-        this.tipo_id = tipo_id;
+        this.tipoId = tipoid;
         this.nombre = nombre;
         this.fechaNacimiento = fechaNacimiento;
         consultas=new LinkedHashSet<>();
         this.eps=eps;
     }
 
-    public Paciente() {
+    public Paciente(){
     }
 
-    public int getId() {
+    public int getId(){
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(int id){
         this.id = id;
     }
 
-    public Eps getEps() {
+    public Eps getEps(){
         return eps;
     }
 
-    public void setEps(Eps eps) {
+    public void setEps(Eps eps){
         this.eps = eps;
     }
     
     
-
-    public String getTipo_id() {
-        return tipo_id;
+    public String getTipoId(){
+        return tipoId;
     }
 
-    public void setTipo_id(String tipo_id) {
-        this.tipo_id = tipo_id;
+    public void setTipoId(String tipoId){
+        this.tipoId = tipoId;
     }
 
-    public String getNombre() {
+    public String getNombre(){
         return nombre;
     }
 
-    public void setNombre(String nombre) {
+    public void setNombre(String nombre){
         this.nombre = nombre;
     }
 
-    public Date getFechaNacimiento() {
+    public Date getFechaNacimiento(){
         return fechaNacimiento;
     }
 
-    public void setFechaNacimiento(Date fechaNacimiento) {
+    public void setFechaNacimiento(Date fechaNacimiento){
         this.fechaNacimiento = fechaNacimiento;
     }
 
@@ -99,7 +98,7 @@ public class Paciente {
 
     @Override
     public String toString() {
-        String rep="Paciente:["+id+","+tipo_id+","+nombre+","+fechaNacimiento+"]\n";
+        String rep="Paciente:["+id+","+tipoId+","+nombre+","+fechaNacimiento+"]\n";
         for (Consulta c:consultas){
             rep+="\t["+c+"]\n";
         }

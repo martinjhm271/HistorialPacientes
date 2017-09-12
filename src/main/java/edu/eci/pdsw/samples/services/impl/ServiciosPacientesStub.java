@@ -47,31 +47,31 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
 
     @Override
     public Paciente consultarPaciente(int idPaciente, String tipoid) throws ExcepcionServiciosPacientes {
-        Paciente p = pacientes.get(new Tupla<>(idPaciente, tipoid));
-        if (p == null) {
+        Paciente paciente = pacientes.get(new Tupla<>(idPaciente, tipoid));
+        if (paciente == null) {
             throw new ExcepcionServiciosPacientes("Paciente " + idPaciente + " no esta registrado");
         } else {
-            return p;
+            return paciente;
         }
 
     }
 
     @Override
-    public void registrarNuevoPaciente(Paciente p) throws ExcepcionServiciosPacientes {
-        p.getEps().setId(ideps);
+    public void registrarNuevoPaciente(Paciente paciente) throws ExcepcionServiciosPacientes {
+        paciente.getEps().setId(ideps);
         ideps++;
-        p.setId(idpaciente);
+        paciente.setId(idpaciente);
         idpaciente++;
-        pacientes.put(new Tupla<>(p.getId(), p.getTipo_id()), p);
+        pacientes.put(new Tupla<>(paciente.getId(), paciente.getTipoId()), paciente);
     }
 
     @Override
-    public void agregarConsultaPaciente(int idPaciente, String tipoid, Consulta c) throws ExcepcionServiciosPacientes {
-        Paciente p = pacientes.get(new Tupla<>(idPaciente, tipoid));
-        if (p != null) {
-            c.setId(idconsulta);
+    public void agregarConsultaPaciente(int idPaciente, String tipoid, Consulta consulta) throws ExcepcionServiciosPacientes {
+        Paciente paciente = pacientes.get(new Tupla<>(idPaciente, tipoid));
+        if (paciente != null) {
+            consulta.setId(idconsulta);
             idconsulta++;
-            p.getConsultas().add(c);
+            paciente.getConsultas().add(consulta);
         } else {
             throw new ExcepcionServiciosPacientes("Paciente " + idPaciente + " no esta registrado");
         }
@@ -87,14 +87,14 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
     @Override
     public void pagarAbonarConsulta(int idPaciente, String tipoid, int idConsulta, long pagoabono) throws ExcepcionServiciosPacientes {
         boolean ban = false;
-        Paciente p = consultarPaciente(idPaciente, tipoid);
-        if (p != null) {
-            for (Consulta c : p.getConsultas()) {
-                if (c.getId() == idConsulta) {
-                    if (c.getCosto() < pagoabono) {
+        Paciente paciente = consultarPaciente(idPaciente, tipoid);
+        if (paciente != null) {
+            for (Consulta consulta : paciente.getConsultas()) {
+                if (consulta.getId() == idConsulta) {
+                    if (consulta.getCosto() < pagoabono) {
                         throw new ExcepcionServiciosPacientes("esta pagando/abonando mas de la cuenta,porfavor pague solo lo necesario.");
                     } else {
-                        c.setCosto(c.getCosto() - pagoabono);
+                        consulta.setCosto(consulta.getCosto() - pagoabono);
                         ban = true;
                         break;
                     }
@@ -113,11 +113,11 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
     @Override
     public List<Consulta> obtenerConsultasEpsPorFecha(String nameEps, Date fechaInicio, Date fechaFin) throws ExcepcionServiciosPacientes {
         List<Consulta> temp = new ArrayList<>();
-        for (Paciente p : pacientes.values()) {
-            if (p.getEps().getNombre().equals(nameEps)) {
-                for (Consulta c : p.getConsultas()) {
-                    if (c.getFechayHora().before(fechaFin) && c.getFechayHora().after(fechaInicio)) {
-                        temp.add(c);
+        for (Paciente paciente : pacientes.values()) {
+            if (paciente.getEps().getNombre().equals(nameEps)) {
+                for (Consulta consulta : paciente.getConsultas()) {
+                    if (consulta.getFechayHora().before(fechaFin) && consulta.getFechayHora().after(fechaInicio)) {
+                        temp.add(consulta);
                     }
                 }
             }
@@ -128,9 +128,9 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
     @Override
     public List<Consulta> obtenerConsultasEps(String nameEps) throws ExcepcionServiciosPacientes {
         List<Consulta> temp = new ArrayList<>();
-        for (Paciente p : pacientes.values()) {
-            if (p.getEps().getNombre().equals(nameEps)) {
-                temp.addAll(p.getConsultas());
+        for (Paciente paciente : pacientes.values()) {
+            if (paciente.getEps().getNombre().equals(nameEps)) {
+                temp.addAll(paciente.getConsultas());
             }
         }
         if (temp.isEmpty()) {
@@ -142,10 +142,10 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
     @Override
     public long obtenerCostoEpsPorFecha(String nameEps, Date fechaInicio, Date fechaFin) throws ExcepcionServiciosPacientes {
         long deuda = 0;
-        for (Paciente p1 : pacientes.values()) {
-            if (p1.getEps().getNombre().equals(nameEps)) {
-                for (Consulta c : p1.getConsultas()) {
-                    if(c.getFechayHora().after(fechaInicio) && c.getFechayHora().before(fechaFin)){deuda += c.getCosto();}
+        for (Paciente paciente : pacientes.values()) {
+            if (paciente.getEps().getNombre().equals(nameEps)) {
+                for (Consulta consulta : paciente.getConsultas()) {
+                    if(consulta.getFechayHora().after(fechaInicio) && consulta.getFechayHora().before(fechaFin)){deuda += consulta.getCosto();}
                 }
             }
         }
@@ -157,25 +157,25 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
 
     @Override
     public Paciente consultarPacienteConConsulta(int idConsulta) throws ExcepcionServiciosPacientes {
-        Paciente p = null;
-        for (Paciente p1 : pacientes.values()) {
-            for (Consulta c : p1.getConsultas()) {
-                if (c.getId() == idConsulta) {
-                    return p1;
+        Paciente paciente = null;
+        for (Paciente paciente2 : pacientes.values()) {
+            for (Consulta consulta : paciente2.getConsultas()) {
+                if (consulta.getId() == idConsulta) {
+                    return paciente2;
                 }
             }
         }
-        return p;
+        return paciente;
     }
 
     @Override
     public List<Consulta> consultarConsultaPaciente(int idPaciente, String tipoid) throws ExcepcionServiciosPacientes {
-        Paciente p = pacientes.get(new Tupla<>(idPaciente, tipoid));
+        Paciente paciente = pacientes.get(new Tupla<>(idPaciente, tipoid));
         List<Consulta> temp = new ArrayList<>();
-        if (p == null) {
+        if (paciente == null) {
             throw new ExcepcionServiciosPacientes("Paciente " + idPaciente + " no esta registrado");
         } else {
-            temp.addAll(p.getConsultas());
+            temp.addAll(paciente.getConsultas());
             return temp;
         }
     }
@@ -184,13 +184,13 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
     public List<Paciente> consultarPacienteMoroso(String nameEps, long deudaGeneral) throws ExcepcionServiciosPacientes {
         List<Paciente> temp = new ArrayList<>();
         long deuda = 0;
-        for (Paciente p1 : pacientes.values()) {
-            if (p1.getEps().getNombre().equals(nameEps)) {
-                for (Consulta c : p1.getConsultas()) {
-                    deuda += c.getCosto();
+        for (Paciente paciente1 : pacientes.values()) {
+            if (paciente1.getEps().getNombre().equals(nameEps)) {
+                for (Consulta consulta : paciente1.getConsultas()) {
+                    deuda += consulta.getCosto();
                 }
                 if (deuda >= deudaGeneral) {
-                    temp.add(p1);
+                    temp.add(paciente1);
                 }
             }
 
@@ -208,42 +208,42 @@ public class ServiciosPacientesStub implements ServiciosPacientes {
             Eps eps5 = new Eps("Medimas", "med");
             Eps eps6 = new Eps("SaludTotal", "slt");
 
-            Paciente p1 = new Paciente("CC", "Juan Perez", java.sql.Date.valueOf("2000-01-01"), eps1);
-            Paciente p2 = new Paciente("CC", "Maria Rodriguez", java.sql.Date.valueOf("2000-01-01"), eps2);
-            Paciente p3 = new Paciente("CC", "Pedro Martinez", java.sql.Date.valueOf("1956-05-01"), eps3);
-            Paciente p4 = new Paciente("CC", "Martin Hernandez", java.sql.Date.valueOf("2000-01-01"), eps4);
-            Paciente p5 = new Paciente("CC", "Cristian Pinzon", java.sql.Date.valueOf("2000-01-01"), eps4);
-            Paciente p6 = new Paciente("CC", "Daniel Beltran", java.sql.Date.valueOf("1956-05-01"), eps5);
-            Paciente p7 = new Paciente("CC", "Ricardo Pinto", java.sql.Date.valueOf("1956-05-01"), eps6);
+            Paciente paciente1 = new Paciente("CC", "Juan Perez", java.sql.Date.valueOf("2000-01-01"), eps1);
+            Paciente paciente2 = new Paciente("CC", "Maria Rodriguez", java.sql.Date.valueOf("2000-01-01"), eps2);
+            Paciente paciente3 = new Paciente("CC", "Pedro Martinez", java.sql.Date.valueOf("1956-05-01"), eps3);
+            Paciente paciente4 = new Paciente("CC", "Martin Hernandez", java.sql.Date.valueOf("2000-01-01"), eps4);
+            Paciente paciente5 = new Paciente("CC", "Cristian Pinzon", java.sql.Date.valueOf("2000-01-01"), eps4);
+            Paciente paciente6 = new Paciente("CC", "Daniel Beltran", java.sql.Date.valueOf("1956-05-01"), eps5);
+            Paciente paciente7 = new Paciente("CC", "Ricardo Pinto", java.sql.Date.valueOf("1956-05-01"), eps6);
 
-            registrarNuevoPaciente(p1);
-            registrarNuevoPaciente(p2);
-            registrarNuevoPaciente(p3);
-            registrarNuevoPaciente(p4);
-            registrarNuevoPaciente(p5);
-            registrarNuevoPaciente(p6);
-            registrarNuevoPaciente(p7);
+            registrarNuevoPaciente(paciente1);
+            registrarNuevoPaciente(paciente2);
+            registrarNuevoPaciente(paciente3);
+            registrarNuevoPaciente(paciente4);
+            registrarNuevoPaciente(paciente5);
+            registrarNuevoPaciente(paciente6);
+            registrarNuevoPaciente(paciente7);
 
-            Consulta c1 = new Consulta(java.sql.Date.valueOf("2000-01-01"), "Dolor de cabeza", 454);
-            Consulta c2 = new Consulta(java.sql.Date.valueOf("2000-01-02"), "Dolor de estomago", 271);
-            Consulta c3 = new Consulta(java.sql.Date.valueOf("2000-04-01"), "Dolor de garganta", 222);
-            Consulta c4 = new Consulta(java.sql.Date.valueOf("2000-01-01"), "Gripa", 54);
-            Consulta c5 = new Consulta(java.sql.Date.valueOf("2000-03-11"), "Fiebre", 71);
-            Consulta c6 = new Consulta(java.sql.Date.valueOf("2000-02-07"), "Malestar y mareo", 322);
-            Consulta c7 = new Consulta(java.sql.Date.valueOf("2000-02-09"), "Vomito", 322);
-            Consulta c8 = new Consulta(java.sql.Date.valueOf("2000-02-09"), "Alergia", 322);
-            Consulta c9 = new Consulta(java.sql.Date.valueOf("2000-02-09"), "Resfriado", 322);
+            Consulta consulta1 = new Consulta(java.sql.Date.valueOf("2000-01-01"), "Dolor de cabeza", 454);
+            Consulta consulta2 = new Consulta(java.sql.Date.valueOf("2000-01-02"), "Dolor de estomago", 271);
+            Consulta consulta3 = new Consulta(java.sql.Date.valueOf("2000-04-01"), "Dolor de garganta", 222);
+            Consulta consulta4 = new Consulta(java.sql.Date.valueOf("2000-01-01"), "Gripa", 54);
+            Consulta consulta5 = new Consulta(java.sql.Date.valueOf("2000-03-11"), "Fiebre", 71);
+            Consulta consulta6 = new Consulta(java.sql.Date.valueOf("2000-02-07"), "Malestar y mareo", 322);
+            Consulta consulta7 = new Consulta(java.sql.Date.valueOf("2000-02-09"), "Vomito", 322);
+            Consulta consulta8 = new Consulta(java.sql.Date.valueOf("2000-02-09"), "Alergia", 322);
+            Consulta consulta9 = new Consulta(java.sql.Date.valueOf("2000-02-09"), "Resfriado", 322);
 
-            agregarConsultaPaciente(1, "CC", c1);
-            agregarConsultaPaciente(1, "CC", c2);
-            agregarConsultaPaciente(1, "CC", c3);
-            agregarConsultaPaciente(2, "CC", c4);
-            agregarConsultaPaciente(3, "CC", c5);
-            agregarConsultaPaciente(4, "CC", c6);
-            agregarConsultaPaciente(5, "CC", c7);
-            agregarConsultaPaciente(6, "CC", c8);
-            agregarConsultaPaciente(7, "CC", c5);
-            agregarConsultaPaciente(7, "CC", c9);
+            agregarConsultaPaciente(1, "CC", consulta1);
+            agregarConsultaPaciente(1, "CC", consulta2);
+            agregarConsultaPaciente(1, "CC", consulta3);
+            agregarConsultaPaciente(2, "CC", consulta4);
+            agregarConsultaPaciente(3, "CC", consulta5);
+            agregarConsultaPaciente(4, "CC", consulta6);
+            agregarConsultaPaciente(5, "CC", consulta7);
+            agregarConsultaPaciente(6, "CC", consulta8);
+            agregarConsultaPaciente(7, "CC", consulta5);
+            agregarConsultaPaciente(7, "CC", consulta9);
 
         } catch (ExcepcionServiciosPacientes ex) {
             Logger.getLogger(ServiciosPacientesStub.class.getName()).log(Level.SEVERE, null, ex);

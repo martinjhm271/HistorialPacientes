@@ -25,31 +25,31 @@ public class MyBatisDAOEps implements DaoEps{
     
      
     @Inject
-    private EpsMapper EpsMapper;
+    private EpsMapper epsMapper;
     
     @Override
-    public Eps cargar(int id) throws PersistenceException {
-        return EpsMapper.obtenerEps(id);
+    public Eps cargar(int idEps) throws PersistenceException {
+        return epsMapper.obtenerEps(idEps);
     }
 
     @Override
     public List<Eps> cargarTodos() throws PersistenceException {
-        return EpsMapper.obtenerEpss();
+        return epsMapper.obtenerEpss();
     }
 
     @Override
     public void guardar(Eps eps) throws PersistenceException {
-        EpsMapper.insertarEps(eps.getNombre(),eps.getNit());
+        epsMapper.insertarEps(eps.getNombre(),eps.getNit());
     }
 
     @Override
-    public void actualizar(int id,String nombre,String nit) throws PersistenceException {
-        EpsMapper.actualizarEps(id,nombre, nit);
+    public void actualizar(int idEps,String nombre,String nit) throws PersistenceException {
+        epsMapper.actualizarEps(idEps,nombre, nit);
     }
 
     @Override
     public Eps cargar2(String nombre) throws PersistenceException {
-        return EpsMapper.obtenerEps2(nombre);
+        return epsMapper.obtenerEps2(nombre);
     }
 
         

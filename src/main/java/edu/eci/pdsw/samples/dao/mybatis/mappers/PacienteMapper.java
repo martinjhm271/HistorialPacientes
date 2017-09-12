@@ -17,16 +17,16 @@ public interface PacienteMapper {
     
     public Paciente obtenerPacienteConConsulta(@Param("id")int idConsulta); 
     
-    public Paciente obtenerPaciente(@Param("id")int id,@Param("tipo_id")String tipo_id); 
+    public Paciente obtenerPaciente(@Param("id")int idPaciente,@Param("tipo_id")String tipoId); 
     
-    public long obtenerDeudaPaciente(@Param("id")int id);
+    public long obtenerDeudaPaciente(@Param("id")int idPaciente);
     
-    public void insertarPaciente(@Param("tipo_id")String tipo_id,@Param("nombre")String nombre,@Param("fechaNacimiento")Date fechaNacimiento,@Param("eps")int eps_id);
+    public void insertarPaciente(@Param("tipo_id")String tipoId,@Param("nombre")String nombre,@Param("fechaNacimiento")Date fechaNacimiento,@Param("eps")int epsId);
     
     public List<Paciente> obtenerPacientes();
     
     public List<Paciente> obtenerPacientes2(@Param("nameEps")String nameEps,@Param("deuda")long deuda);
     
-    public void actualizarPaciente(@Param("id")int id,@Param("eps")int eps_id);
+    public void actualizarPaciente(@Param("id")int idPaciente,@Param("eps")int epsId);
 
 }

@@ -27,8 +27,8 @@ public class MyBatisDAOConsulta implements DaoConsulta{
     private ConsultaMapper consultaMapper;
     
     @Override
-    public Consulta cargar(int id) throws PersistenceException {
-        return consultaMapper.obtenerConsulta(id);
+    public Consulta cargar(int idConsulta) throws PersistenceException {
+        return consultaMapper.obtenerConsulta(idConsulta);
     }
 
     @Override
@@ -37,19 +37,19 @@ public class MyBatisDAOConsulta implements DaoConsulta{
     }
 
     @Override
-    public void guardar(Consulta c,int idpaciente,String tipo_id) throws PersistenceException {
-         consultaMapper.insertarConsulta(c.getFechayHora(),c.getResumen(), c.getCosto(),idpaciente,tipo_id);
+    public void guardar(Consulta consulta,int idpaciente,String tipoId) throws PersistenceException {
+         consultaMapper.insertarConsulta(consulta.getFechayHora(),consulta.getResumen(), consulta.getCosto(),idpaciente,tipoId);
     }
 
     @Override
-    public void actualizar (int idPaciente,int id,long costo) throws PersistenceException {
-        consultaMapper.actualizarConsulta(idPaciente,id, costo);
+    public void actualizar (int idPaciente,int idConsulta,long costo) throws PersistenceException {
+        consultaMapper.actualizarConsulta(idPaciente,idConsulta, costo);
     }
 
     
     @Override
-    public List<Consulta> cargarTodos2(int id_paciente) throws PersistenceException {
-        return consultaMapper.obtenerConsultas2(id_paciente);
+    public List<Consulta> cargarTodos2(int idPaciente) throws PersistenceException {
+        return consultaMapper.obtenerConsultas2(idPaciente);
     }
 
   

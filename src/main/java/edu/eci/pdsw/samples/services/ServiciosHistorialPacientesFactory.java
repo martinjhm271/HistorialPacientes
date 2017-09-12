@@ -25,7 +25,7 @@ import edu.eci.pdsw.samples.dao.mybatis.MyBatisDAOPaciente;
 
 import org.mybatis.guice.XMLMyBatisModule;
 import org.mybatis.guice.datasource.helper.JdbcHelper;
-import org.mybatis.guice.*;
+
 
 
 

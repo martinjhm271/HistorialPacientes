@@ -131,16 +131,12 @@
                 
                 <configuration>
                     <sourceEncoding>utf-8</sourceEncoding>
-                    <minimumTokens>20</minimumTokens>
+                    <minimumTokens>1000</minimumTokens>
                     <targetJdk>1.8</targetJdk>
           
                      <rulesets>
                         <ruleset>/rulesets/java/basic.xml</ruleset>
                         <ruleset>/rulesets/java/braces.xml</ruleset>
-                        <ruleset>/rulesets/java/naming.xml</ruleset>
-                        <ruleset>/rulesets/java/design.xml</ruleset>
-                        <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                        <ruleset>/rulesets/java/imports.xml</ruleset>
                     </rulesets>
 
           
@@ -195,16 +191,12 @@
                 
                 <configuration>
                     <sourceEncoding>utf-8</sourceEncoding>
-                    <minimumTokens>20</minimumTokens>
+                    <minimumTokens>1000</minimumTokens>
                     <targetJdk>1.8</targetJdk>
           
                     <rulesets>
                         <ruleset>/rulesets/java/basic.xml</ruleset>
                         <ruleset>/rulesets/java/braces.xml</ruleset>
-                        <ruleset>/rulesets/java/naming.xml</ruleset>
-                        <ruleset>/rulesets/java/design.xml</ruleset>
-                        <ruleset>/rulesets/java/unusedcode.xml</ruleset>
-                        <ruleset>/rulesets/java/imports.xml</ruleset>
                     </rulesets>
                     
           

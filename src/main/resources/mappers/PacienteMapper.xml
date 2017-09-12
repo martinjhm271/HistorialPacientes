@@ -7,7 +7,7 @@
     
     <resultMap type='Paciente' id="PacienteResult">
         <id property='id' column='id'/>
-        <result property='tipo_id' column='tipo_id'/>
+        <result property='tipoId' column='tipo_id'/>
         <result property='nombre' column='nombre'/>
         <result property='fechaNacimiento' column='fechanacimiento'/>  
         <association property='eps' javaType="Eps"  columnPrefix='eps_'  resultMap='EpsResult'/> 

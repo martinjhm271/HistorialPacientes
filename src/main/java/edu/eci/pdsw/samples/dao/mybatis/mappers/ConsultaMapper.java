@@ -17,7 +17,7 @@ public interface ConsultaMapper {
     
     public List<Consulta> obtenerConsultas();
     
-    public List<Consulta> obtenerConsultas2(@Param("idPaciente")int id);
+    public List<Consulta> obtenerConsultas2(@Param("idPaciente")int idPaciente);
     
     public List<Consulta> obtenerConsultas3(@Param("nameEps")String nameEps);
     
@@ -25,11 +25,11 @@ public interface ConsultaMapper {
     
     public long obtenerCostoEpsPorFecha(@Param("nameEps")String nameEps,@Param("f1")Date fechainicio,@Param("f2")Date fechafin);
     
-    public Consulta obtenerConsulta(@Param("id")int id);
+    public Consulta obtenerConsulta(@Param("id")int idConsulta);
     
-    public void insertarConsulta(@Param("fechayHora")Date fechayHora,@Param("resumen")String resumen,@Param("costo")long costo,@Param("idPaciente")int idPaciente,@Param("tipo_id")String tipo_id);
+    public void insertarConsulta(@Param("fechayHora")Date fechayHora,@Param("resumen")String resumen,@Param("costo")long costo,@Param("idPaciente")int idPaciente,@Param("tipo_id")String tipoId);
     
-    public void actualizarConsulta(@Param("idPaciente")int idPaciente,@Param("id")int id,@Param("costo")long costo);
+    public void actualizarConsulta(@Param("idPaciente")int idPaciente,@Param("id")int idConsulta,@Param("costo")long costo);
     
  
     

@@ -14,11 +14,11 @@ import java.util.List;
  */
 public interface DaoConsulta {
  
-    public Consulta cargar(int id) throws PersistenceException;
+    public Consulta cargar(int idConsulta) throws PersistenceException;
     
     public List<Consulta> cargarTodos() throws PersistenceException;
     
-    public List<Consulta> cargarTodos2(int paciente_id) throws PersistenceException;
+    public List<Consulta> cargarTodos2(int idPaciente) throws PersistenceException;
     
     public List<Consulta> cargarTodos3(String nombreEps) throws PersistenceException;
     
@@ -26,9 +26,9 @@ public interface DaoConsulta {
     
     public long cargarDeudaPorFecha(String nombreEps,Date inicio,Date fin) throws PersistenceException;
     
-    public void guardar(Consulta c,int idPaciente,String tipo_id) throws PersistenceException;
+    public void guardar(Consulta consulta,int idPaciente,String tipoId) throws PersistenceException;
     
-    public void actualizar(int idPaciente,int id,long Costo) throws PersistenceException;
+    public void actualizar(int idPaciente,int idConsulta,long costo) throws PersistenceException;
     
   
     
