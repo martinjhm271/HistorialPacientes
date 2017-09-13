@@ -19,9 +19,9 @@
             <transactionManager type="JDBC" />
             <dataSource type="POOLED">
                 <property name="driver" value="org.postgresql.Driver" />
-                <property name="url" value="jdbc:postgresql://mydbinstance.c9zm69mla7sq.us-west-2.rds.amazonaws.com:5432/HistorialPacientes?sslmode=require"/> 
-                <property name="username" value="awsuser" />
-                <property name="password" value="mypassword" />
+                <property name="url" value="jdbc:postgresql://pg-3df91da.martinjhm271-e86c.aivencloud.com:24375/defaultdb?sslmode=require"/> 
+                <property name="username" value="avnadmin" />
+                <property name="password" value="rlwte7usigxtndlg" />
             </dataSource>
         </environment>
     </environments>
